@@ -295,29 +295,16 @@ document.getElementById("volumeSlider").addEventListener("input", function (e) {
   }
 });
 
-// Automatically enter radio-active state on load
-document.addEventListener("DOMContentLoaded", function() {
-  var entryControls = document.getElementById("entryControls");
-  if (entryControls) entryControls.classList.add("hidden");
-  
-  var stack = document.getElementById("entryCenterStack");
-  if (stack) stack.classList.add("radio-active");
-  
-  var dock = document.getElementById("dock");
-  if (dock) dock.hidden = false;
-  
+document.getElementById("joinBtn").addEventListener("click", function () {
+  if (player && typeof player.playVideo === "function") {
+    player.playVideo();
+  }
+  document.getElementById("entryControls").classList.add("hidden");
+  document.getElementById("entryCenterStack").classList.add("radio-active");
+  document.getElementById("dock").hidden = false;
   var seoSection = document.getElementById("seoSection");
-  if (seoSection) seoSection.classList.add("hidden");
-});
-
-// Tap anywhere to unmute
-var hasUnmuted = false;
-document.body.addEventListener("click", function () {
-  if (!hasUnmuted && player && typeof player.unMute === "function") {
-    player.unMute();
-    var slider = document.getElementById("volumeSlider");
-    if (slider) player.setVolume(parseInt(slider.value, 10));
-    hasUnmuted = true;
+  if (seoSection) {
+    seoSection.classList.add("hidden");
   }
 });
 

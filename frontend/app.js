@@ -2,7 +2,7 @@
 const BACKEND_URL = "https://tempo-wala.onrender.com";
 
 const BACKGROUND_VIDEOS = [
-  "bg1.webm", "bg2.webm", "bg3.webm", "bg4.webm", "bg5.webm", "bg6.webm", "bg7.webm"
+  "background.webm", "bg3.webm", "bg4.webm", "bg5.webm", "bg7.webm", "bg9.webm"
 ];
 var availableBackgrounds = [...BACKGROUND_VIDEOS];
 var currentPlayingVideoId = null;
@@ -68,7 +68,9 @@ socket.on("userCount", function (count) {
 // --- Admin online/offline badge + request box visibility ---
 socket.on("adminStatus", function (data) {
   document.getElementById("adminLiveBadge").hidden = !data.online;
-  document.getElementById("requestBox").hidden = !data.online;
+  if (!isAdmin) {
+    document.getElementById("requestBox").hidden = !data.online;
+  }
 });
 
 // --- Room Logic ---
@@ -85,17 +87,6 @@ document.getElementById("joinRoomBtn").addEventListener("click", function() {
 });
 document.getElementById("leaveRoomBtn").addEventListener("click", function() {
   socket.emit("leaveRoom");
-});
-
-document.getElementById("copyRoomBtn").addEventListener("click", function() {
-  var btn = this;
-  if (navigator.clipboard && currentRoomCode && currentRoomCode !== "main") {
-    navigator.clipboard.writeText(currentRoomCode).then(function() {
-      var originalText = btn.textContent;
-      btn.textContent = "Copied!";
-      setTimeout(function() { btn.textContent = originalText; }, 2000);
-    });
-  }
 });
 
 socket.on("roomCreated", function(code) {
@@ -161,8 +152,6 @@ function applySync(data) {
   player.loadVideoById({ videoId: data.videoId, startSeconds: data.elapsed });
 }
 
-var lastSyncCorrection = 0;
-
 // Continuous drift-correction
 socket.on("resync", function (data) {
   if (!player || typeof player.getCurrentTime !== "function") return;
@@ -175,18 +164,11 @@ socket.on("resync", function (data) {
     
     trackElapsedAtSync = adjustedElapsed;
     syncReceivedAt = Date.now();
-    
-    // Only attempt to correct drift every 5 seconds
-    var now = Date.now();
-    if (now - lastSyncCorrection < 5000) return; 
-
     var myTime = player.getCurrentTime();
     var drift = Math.abs(myTime - adjustedElapsed);
-    
-    // Tight drift threshold (0.3s) for near-zero latency
+    // tighter drift threshold for better sync (0.3s instead of 0.6s)
     if (drift > 0.3) {
       player.seekTo(adjustedElapsed, true);
-      lastSyncCorrection = now;
     }
   } catch (e) {
     // player not ready yet — safe to ignore
@@ -295,30 +277,12 @@ document.getElementById("volumeSlider").addEventListener("input", function (e) {
   }
 });
 
-// Automatically enter radio-active state on load
-document.addEventListener("DOMContentLoaded", function() {
-  var entryControls = document.getElementById("entryControls");
-  if (entryControls) entryControls.classList.add("hidden");
-  
-  var stack = document.getElementById("entryCenterStack");
-  if (stack) stack.classList.add("radio-active");
-  
-  var dock = document.getElementById("dock");
-  if (dock) dock.hidden = false;
-  
-  var seoSection = document.getElementById("seoSection");
-  if (seoSection) seoSection.classList.add("hidden");
-});
-
-// Tap anywhere to unmute
-var hasUnmuted = false;
-document.body.addEventListener("click", function () {
-  if (!hasUnmuted && player && typeof player.unMute === "function") {
-    player.unMute();
-    var slider = document.getElementById("volumeSlider");
-    if (slider) player.setVolume(parseInt(slider.value, 10));
-    hasUnmuted = true;
+document.getElementById("joinBtn").addEventListener("click", function () {
+  if (player && typeof player.playVideo === "function") {
+    player.playVideo();
   }
+  document.getElementById("joinBtn").classList.add("hidden");
+  document.getElementById("dock").hidden = false;
 });
 
 // =====================================================
@@ -366,6 +330,7 @@ socket.on("adminLoginResult", function (res) {
   document.getElementById("adminPanel").hidden = false;
   document.getElementById("adminTransport").hidden = false;
   document.getElementById("searchWidget").hidden = false;
+  document.getElementById("requestBox").hidden = true;
   document.getElementById("progressTrack").classList.add("admin-mode");
   activePlaylistKey = res.currentPlaylistKey;
   renderPlaylistButtons(res.playlists);
@@ -466,11 +431,10 @@ document.getElementById("linkPlayBtn").addEventListener("click", function () {
   var input = document.getElementById("linkInput");
   var timeInput = document.getElementById("startTimeInput");
   if (!input.value.trim()) return;
-  var startText = timeInput ? timeInput.value.trim() : "";
-  var startSeconds = parseTimeToSeconds(startText);
+  var startSeconds = parseTimeToSeconds(timeInput.value.trim());
   socket.emit("adminPlayLink", { url: input.value.trim(), startSeconds: startSeconds });
   input.value = "";
-  if (timeInput) timeInput.value = "";
+  timeInput.value = "";
 });
 
 function parseTimeToSeconds(text) {
