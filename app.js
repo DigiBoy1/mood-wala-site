@@ -2,7 +2,13 @@
 const BACKEND_URL = "https://tempo-wala.onrender.com";
 
 const BACKGROUND_VIDEOS = [
-  "bg1.webm", "bg2.webm", "bg3.webm", "bg4.webm", "bg5.webm", "bg6.webm", "bg7.webm"
+  "bg1.webm",
+  "bg2.webm",
+  "bg3.webm",
+  "bg4.webm",
+  "bg5.webm",
+  "bg6.webm",
+  "bg7.webm",
 ];
 var availableBackgrounds = [...BACKGROUND_VIDEOS];
 var currentPlayingVideoId = null;
@@ -13,18 +19,20 @@ function changeBackgroundRandomly() {
   }
   var randomIndex = Math.floor(Math.random() * availableBackgrounds.length);
   var nextBg = availableBackgrounds.splice(randomIndex, 1)[0];
-  
+
   var videoEl = document.querySelector(".bg-video");
   if (videoEl) {
     videoEl.src = nextBg;
     var playPromise = videoEl.play();
     if (playPromise !== undefined) {
-      playPromise.catch(function(e) { console.log("Video autoplay blocked:", e); });
+      playPromise.catch(function (e) {
+        console.log("Video autoplay blocked:", e);
+      });
     }
   }
 }
 
-var socket = io(BACKEND_URL);
+var socket = io(BACKEND_URL, { transports: ["websocket"] });
 var player = null;
 var pendingSync = null;
 var isAdmin = false;
@@ -38,24 +46,29 @@ var networkLatency = 0;
 function measureLatency() {
   socket.emit("pingTime", Date.now());
 }
-socket.on("pongTime", function(data) {
+socket.on("pongTime", function (data) {
   var now = Date.now();
   networkLatency = (now - data.clientTime) / 2;
   // Schedule next ping in 30s
   setTimeout(measureLatency, 30000);
 });
 // Start measuring on connect
-socket.on("connect", function() {
+socket.on("connect", function () {
   measureLatency();
 });
 
 // --- Clock + date ---
 function updateClock() {
   var now = new Date();
-  document.getElementById("clock").textContent =
-    now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  document.getElementById("dateLine").textContent =
-    now.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" });
+  document.getElementById("clock").textContent = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  document.getElementById("dateLine").textContent = now.toLocaleDateString([], {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
 }
 setInterval(updateClock, 1000);
 updateClock();
@@ -74,36 +87,38 @@ socket.on("adminStatus", function (data) {
 // --- Room Logic ---
 var currentRoomCode = "main";
 
-document.getElementById("createRoomBtn").addEventListener("click", function() {
+document.getElementById("createRoomBtn").addEventListener("click", function () {
   socket.emit("createRoom");
 });
-document.getElementById("joinRoomBtn").addEventListener("click", function() {
+document.getElementById("joinRoomBtn").addEventListener("click", function () {
   var code = document.getElementById("joinRoomInput").value.trim();
   if (code) {
     socket.emit("joinRoom", code);
   }
 });
-document.getElementById("leaveRoomBtn").addEventListener("click", function() {
+document.getElementById("leaveRoomBtn").addEventListener("click", function () {
   socket.emit("leaveRoom");
 });
 
-document.getElementById("copyRoomBtn").addEventListener("click", function() {
+document.getElementById("copyRoomBtn").addEventListener("click", function () {
   var btn = this;
   if (navigator.clipboard && currentRoomCode && currentRoomCode !== "main") {
-    navigator.clipboard.writeText(currentRoomCode).then(function() {
+    navigator.clipboard.writeText(currentRoomCode).then(function () {
       var originalText = btn.textContent;
       btn.textContent = "Copied!";
-      setTimeout(function() { btn.textContent = originalText; }, 2000);
+      setTimeout(function () {
+        btn.textContent = originalText;
+      }, 2000);
     });
   }
 });
 
-socket.on("roomCreated", function(code) {
+socket.on("roomCreated", function (code) {
   currentRoomCode = code;
   showRoomJoinedUI(code);
 });
 
-socket.on("roomJoined", function(code) {
+socket.on("roomJoined", function (code) {
   currentRoomCode = code;
   if (code === "main") {
     showRoomNotJoinedUI();
@@ -113,13 +128,13 @@ socket.on("roomJoined", function(code) {
   document.getElementById("roomErrorMsg").hidden = true;
 });
 
-socket.on("roomError", function(msg) {
+socket.on("roomError", function (msg) {
   var err = document.getElementById("roomErrorMsg");
   err.textContent = msg;
   err.hidden = false;
 });
 
-socket.on("roomDestroyed", function(msg) {
+socket.on("roomDestroyed", function (msg) {
   alert(msg);
   socket.emit("leaveRoom");
 });
@@ -139,16 +154,19 @@ socket.on("upNext", function (data) {
   var banner = document.getElementById("upNextBanner");
   banner.textContent = "🎵 Coming up: " + data.title;
   banner.hidden = false;
-  setTimeout(function () {
-    banner.hidden = true;
-  }, (data.seconds || 10) * 1000);
+  setTimeout(
+    function () {
+      banner.hidden = true;
+    },
+    (data.seconds || 10) * 1000,
+  );
 });
 
 // --- Sync events (which song is playing right now) ---
 socket.on("sync", function (data) {
   // Apply latency compensation to elapsed time
-  data.elapsed += (networkLatency / 1000);
-  
+  data.elapsed += networkLatency / 1000;
+
   updateNowPlaying(data);
   if (!player || typeof player.loadVideoById !== "function") {
     pendingSync = data;
@@ -169,20 +187,20 @@ socket.on("resync", function (data) {
   try {
     var current = player.getVideoData();
     if (!current || current.video_id !== data.videoId) return; // different song, ignore
-    
+
     // Apply latency compensation
-    var adjustedElapsed = data.elapsed + (networkLatency / 1000);
-    
+    var adjustedElapsed = data.elapsed + networkLatency / 1000;
+
     trackElapsedAtSync = adjustedElapsed;
     syncReceivedAt = Date.now();
-    
+
     // Only attempt to correct drift every 5 seconds
     var now = Date.now();
-    if (now - lastSyncCorrection < 5000) return; 
+    if (now - lastSyncCorrection < 5000) return;
 
     var myTime = player.getCurrentTime();
     var drift = Math.abs(myTime - adjustedElapsed);
-    
+
     // Tight drift threshold (0.3s) for near-zero latency
     if (drift > 0.3) {
       player.seekTo(adjustedElapsed, true);
@@ -220,13 +238,15 @@ function updateNowPlaying(data) {
     artEl.src = "https://img.youtube.com/vi/" + data.videoId + "/hqdefault.jpg";
   }
   if (upNextEl) {
-    upNextEl.textContent = data.upNextTitle ? "Up next: " + splitTitle(data.upNextTitle).song : "";
+    upNextEl.textContent = data.upNextTitle
+      ? "Up next: " + splitTitle(data.upNextTitle).song
+      : "";
   }
   if (data.title) {
     document.title = data.title + " — Nitinsinghverse";
   }
 
-  if (typeof data.roomListeners !== 'undefined') {
+  if (typeof data.roomListeners !== "undefined") {
     var ruCount = document.getElementById("roomUserCount");
     if (ruCount) ruCount.textContent = data.roomListeners;
   }
@@ -254,7 +274,9 @@ function updateProgressBar() {
   var elapsed = Math.min(getEstimatedElapsed(), trackDuration);
   var pct = (elapsed / trackDuration) * 100;
   fill.style.width = pct + "%";
-  if (timeText) timeText.textContent = formatTime(elapsed) + " / " + formatTime(trackDuration);
+  if (timeText)
+    timeText.textContent =
+      formatTime(elapsed) + " / " + formatTime(trackDuration);
 }
 setInterval(updateProgressBar, 1000);
 
@@ -299,13 +321,15 @@ document.getElementById("joinBtn").addEventListener("click", function () {
   if (player && typeof player.playVideo === "function") {
     player.playVideo();
   }
-  document.getElementById("entryControls").classList.add("hidden");
-  document.getElementById("entryCenterStack").classList.add("radio-active");
-  document.getElementById("dock").hidden = false;
-  var seoSection = document.getElementById("seoSection");
-  if (seoSection) {
-    seoSection.classList.add("hidden");
-  }
+  setTimeout(function () {
+    document.getElementById("entryControls").classList.add("hidden");
+    document.getElementById("entryCenterStack").classList.add("radio-active");
+    document.getElementById("dock").hidden = false;
+    var seoSection = document.getElementById("seoSection");
+    if (seoSection) {
+      seoSection.classList.add("hidden");
+    }
+  }, 1200);
 });
 
 // =====================================================
@@ -324,9 +348,11 @@ brandLogo.addEventListener("click", function () {
   adminPasswordInput.focus();
 });
 
-document.getElementById("adminCancelBtn").addEventListener("click", function () {
-  adminModal.hidden = true;
-});
+document
+  .getElementById("adminCancelBtn")
+  .addEventListener("click", function () {
+    adminModal.hidden = true;
+  });
 
 adminModal.addEventListener("click", function (e) {
   if (e.target === adminModal) {
@@ -334,7 +360,9 @@ adminModal.addEventListener("click", function (e) {
   }
 });
 
-document.getElementById("adminSubmitBtn").addEventListener("click", submitAdminLogin);
+document
+  .getElementById("adminSubmitBtn")
+  .addEventListener("click", submitAdminLogin);
 adminPasswordInput.addEventListener("keydown", function (e) {
   if (e.key === "Enter") submitAdminLogin();
 });
@@ -377,7 +405,9 @@ function renderPlaylistButtons(playlists) {
     btn.textContent = p.name;
     if (p.key === activePlaylistKey) btn.classList.add("active");
     btn.addEventListener("click", function () {
-      Array.from(container.children).forEach(function (b) { b.classList.remove("active"); });
+      Array.from(container.children).forEach(function (b) {
+        b.classList.remove("active");
+      });
       btn.classList.add("active");
       socket.emit("adminSwitchPlaylist", p.key); // asks server for this playlist's song list
     });
@@ -409,9 +439,11 @@ document.getElementById("nextBtn").addEventListener("click", function () {
 });
 
 var searchDebounceTimer = null;
-document.getElementById("searchInput").addEventListener("keydown", function (e) {
-  if (e.key === "Enter") runSearch();
-});
+document
+  .getElementById("searchInput")
+  .addEventListener("keydown", function (e) {
+    if (e.key === "Enter") runSearch();
+  });
 document.getElementById("searchInput").addEventListener("input", function () {
   clearTimeout(searchDebounceTimer);
   var value = this.value.trim();
@@ -431,7 +463,8 @@ socket.on("searchResults", function (data) {
   data.results.forEach(function (r) {
     var item = document.createElement("div");
     item.className = "search-result-item";
-    item.innerHTML = '<img src="' + r.thumbnail + '"><span>' + escapeHtml(r.title) + "</span>";
+    item.innerHTML =
+      '<img src="' + r.thumbnail + '"><span>' + escapeHtml(r.title) + "</span>";
     item.addEventListener("click", function () {
       socket.emit("adminPlaySearchResult", r.videoId);
       container.innerHTML = "";
@@ -455,7 +488,10 @@ document.getElementById("linkPlayBtn").addEventListener("click", function () {
   if (!input.value.trim()) return;
   var startText = timeInput ? timeInput.value.trim() : "";
   var startSeconds = parseTimeToSeconds(startText);
-  socket.emit("adminPlayLink", { url: input.value.trim(), startSeconds: startSeconds });
+  socket.emit("adminPlayLink", {
+    url: input.value.trim(),
+    startSeconds: startSeconds,
+  });
   input.value = "";
   if (timeInput) timeInput.value = "";
 });
@@ -475,15 +511,21 @@ function renderRequests(requests) {
   var list = document.getElementById("requestList");
   list.innerHTML = "";
   requests.slice().reverse().forEach(addRequestToList);
-  document.getElementById("requestCount").textContent =
-    requests.length ? "(" + requests.length + ")" : "";
+  document.getElementById("requestCount").textContent = requests.length
+    ? "(" + requests.length + ")"
+    : "";
 }
 
 function addRequestToList(entry) {
   var list = document.getElementById("requestList");
   var item = document.createElement("div");
   item.className = "request-item";
-  item.innerHTML = "🎶 " + escapeHtml(entry.text) + '<span class="req-time">' + entry.time + "</span>";
+  item.innerHTML =
+    "🎶 " +
+    escapeHtml(entry.text) +
+    '<span class="req-time">' +
+    entry.time +
+    "</span>";
   list.insertBefore(item, list.firstChild);
 }
 
@@ -497,10 +539,14 @@ socket.on("newRequest", function (entry) {
   addRequestToList(entry);
 });
 
-document.getElementById("requestSendBtn").addEventListener("click", sendRequest);
-document.getElementById("requestInput").addEventListener("keydown", function (e) {
-  if (e.key === "Enter") sendRequest();
-});
+document
+  .getElementById("requestSendBtn")
+  .addEventListener("click", sendRequest);
+document
+  .getElementById("requestInput")
+  .addEventListener("keydown", function (e) {
+    if (e.key === "Enter") sendRequest();
+  });
 
 function sendRequest() {
   var input = document.getElementById("requestInput");

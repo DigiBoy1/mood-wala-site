@@ -1,301 +1,842 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Mood Wala — Listen Together, Anywhere</title>
-  <meta name="description" content="Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together." />
-  <meta name="keywords" content="Mood Wala, moodwala, mood wala music, Mood Wala Radio, listen together, listen to music together, synchronized radio, online listening room, Bhojpuri Songs, Haryanvi Radio, Bhakti Songs" />
-  <meta name="google-site-verification" content="yX_HTWRQYJUQKmtvSpyX36iVTbeF68azsgVPuS4m5Yk" />
-  <link rel="canonical" href="https://mood-wala.vercel.app/" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Mood Wala — Listen Together, Anywhere</title>
+    <meta
+      name="description"
+      content="Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together."
+    />
+    <meta
+      name="keywords"
+      content="Mood Wala, moodwala, mood wala music, Mood Wala Radio, listen together, listen to music together, synchronized radio, online listening room, Bhojpuri Songs, Haryanvi Radio, Bhakti Songs"
+    />
+    <meta
+      name="google-site-verification"
+      content="yX_HTWRQYJUQKmtvSpyX36iVTbeF68azsgVPuS4m5Yk"
+    />
+    <link rel="canonical" href="https://mood-wala.vercel.app/" />
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://mood-wala.vercel.app/" />
-  <meta property="og:title" content="Mood Wala — Listen Together, Anywhere" />
-  <meta property="og:description" content="Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together." />
-  <meta property="og:site_name" content="Mood Wala" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mood-wala.vercel.app/" />
+    <meta property="og:title" content="Mood Wala — Listen Together, Anywhere" />
+    <meta
+      property="og:description"
+      content="Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together."
+    />
+    <meta property="og:site_name" content="Mood Wala" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://mood-wala.vercel.app/" />
-  <meta name="twitter:title" content="Mood Wala — Listen Together, Anywhere" />
-  <meta name="twitter:description" content="Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together." />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://mood-wala.vercel.app/" />
+    <meta
+      name="twitter:title"
+      content="Mood Wala — Listen Together, Anywhere"
+    />
+    <meta
+      name="twitter:description"
+      content="Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together."
+    />
 
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["WebSite", "RadioStation"],
-    "name": "Mood Wala",
-    "url": "https://mood-wala.vercel.app/",
-    "description": "Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together.",
-    "genre": "World Music, Regional",
-    "inLanguage": ["en", "hi"]
-  }
-  </script>
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["WebSite", "RadioStation"],
+        "name": "Mood Wala",
+        "url": "https://mood-wala.vercel.app/",
+        "description": "Listen to the same music with friends or someone special, wherever you are. Create a room, sync up and enjoy Mood Wala together.",
+        "genre": "World Music, Regional",
+        "inLanguage": ["en", "hi"]
+      }
+    </script>
 
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@700&family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@700&family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <div class="stage">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .glass {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: min(86vw, 320px);
+        height: 76px;
+        padding: 0;
+        border-radius: 18px;
+        cursor: pointer;
+        color: #fff;
+        border: 1.5px solid rgba(255, 255, 255, 0.8);
+        background: linear-gradient(
+          105deg,
+          rgba(255, 255, 255, 0.2),
+          rgba(255, 255, 255, 0.03) 30%,
+          rgba(255, 255, 255, 0.02) 65%,
+          rgba(255, 255, 255, 0.18)
+        );
+        backdrop-filter: blur(0.6px) saturate(135%) brightness(1.05)
+          contrast(1.05);
+        -webkit-backdrop-filter: blur(0.6px) saturate(135%) brightness(1.05)
+          contrast(1.05);
+        box-shadow:
+          0 0 0 1px rgba(40, 90, 65, 0.2),
+          0 18px 28px -10px rgba(20, 60, 40, 0.4),
+          inset 7px 0 10px -4px rgba(255, 255, 255, 0.8),
+          inset -7px 0 10px -4px rgba(255, 255, 255, 0.65),
+          inset 0 -12px 14px -6px rgba(255, 255, 255, 0.6),
+          inset 0 4px 6px rgba(255, 255, 255, 0.85);
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+      }
+      .glass:active {
+        transform: scale(0.98);
+      }
+      .glass .gloss {
+        position: absolute;
+        left: 3px;
+        right: 3px;
+        top: 3px;
+        height: 40%;
+        border-radius: 14px 14px 50% 50%/14px 14px 18px 18px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.26),
+          rgba(255, 255, 255, 0.02)
+        );
+        z-index: 2;
+        pointer-events: none;
+      }
+      .glass .glow {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 40%;
+        background: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.22),
+          transparent
+        );
+        z-index: 1;
+        pointer-events: none;
+      }
+      .glass .streak {
+        position: absolute;
+        top: -30%;
+        left: -40%;
+        width: 35%;
+        height: 160%;
+        transform: rotate(20deg);
+        z-index: 3;
+        pointer-events: none;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.35),
+          transparent
+        );
+        animation: glassSweep 3.2s ease-in-out infinite;
+      }
+      @keyframes glassSweep {
+        0%,
+        55% {
+          left: -40%;
+        }
+        100% {
+          left: 130%;
+        }
+      }
+      .glass .bars {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 0 14px;
+        z-index: 1;
+      }
+      .glass .bar {
+        width: 5px;
+        height: 64%;
+        border-radius: 3px;
+        transform-origin: center;
+        opacity: 0.8;
+      }
+      .glass .label {
+        position: relative;
+        z-index: 4;
+        font-family: "Montserrat", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-shadow:
+          0 2px 8px rgba(0, 0, 0, 0.7),
+          0 0 12px rgba(255, 255, 255, 0.35);
+      }
+      .glass.pop {
+        animation: glassPop 0.5s ease;
+      }
+      @keyframes glassPop {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      #glass-shards {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 99999;
+      }
+      .shard {
+        position: absolute;
+        margin: 0;
+        pointer-events: none;
+        will-change: transform;
+      }
+      .shard .streak {
+        display: none;
+      }
+      .fbar {
+        position: absolute;
+        border-radius: 3px;
+        pointer-events: none;
+        will-change: transform;
+      }
+    </style>
+    \n
+  </head>
+  <body>
+    <div class="stage">
+      <!-- BACKGROUND VIDEO -->
+      <video
+        class="bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        src="bg1.webm"
+      ></video>
+      <div class="bg-overlay"></div>
 
-    <!-- BACKGROUND VIDEO -->
-    <video class="bg-video" autoplay muted loop playsinline src="bg1.webm"></video>
-    <div class="bg-overlay"></div>
-
-    <!-- MAIN RESPONSIVE LAYOUT -->
-    <div class="layout-grid">
-      
-      <!-- 1. CLOCK / DATE (Mobile: Top Left, Desktop: Top Center or hidden if not needed, but we keep it) -->
-      <div class="widget-clock">
-        <div class="pill clock-pill">
-          <span class="pill-icon">🕐</span>
-          <div>
-            <div class="pill-main" id="clock">--:--</div>
-            <div class="pill-sub" id="dateLine">--</div>
+      <!-- MAIN RESPONSIVE LAYOUT -->
+      <div class="layout-grid">
+        <!-- 1. CLOCK / DATE (Mobile: Top Left, Desktop: Top Center or hidden if not needed, but we keep it) -->
+        <div class="widget-clock">
+          <div class="pill clock-pill">
+            <span class="pill-icon">🕐</span>
+            <div>
+              <div class="pill-main" id="clock">--:--</div>
+              <div class="pill-sub" id="dateLine">--</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 2. LIVE RADIO INDICATOR (Mobile: Top Right, Desktop: Status) -->
-      <div class="widget-live-indicator">
-        <div class="live-pill">
-          <span class="status-dot"></span>
-          <span class="online-text">LIVE RADIO</span>
-        </div>
-      </div>
-
-      <!-- 3. BRANDING & ENTRY -->
-      <div class="widget-brand entry-center-stack" id="entryCenterStack">
-        <div class="brandmark" id="brandLogo">
-          <svg class="brand-orbit" viewBox="0 0 100 40" width="120">
-            <path d="M20 30 A20 20 0 1 1 80 30" fill="none" stroke="currentColor" stroke-width="1.2"/>
-            <circle cx="20" cy="30" r="1.5" fill="currentColor"/>
-            <circle cx="80" cy="30" r="1.5" fill="currentColor"/>
-          </svg>
-          <div class="brand-name">Nitinsinghverse</div>
+        <!-- 2. LIVE RADIO INDICATOR (Mobile: Top Right, Desktop: Status) -->
+        <div class="widget-live-indicator">
+          <div class="live-pill">
+            <span class="status-dot"></span>
+            <span class="online-text">LIVE RADIO</span>
+          </div>
         </div>
 
-        <main class="hero">
-          <h1 class="title">
-            <span class="sr-only">Mood Wala — Listen Together</span>
-            <span class="title-mood" aria-hidden="true">MOOD</span>
-            <span class="title-wala" aria-hidden="true">वाला</span>
-          </h1>
-          <p class="tagline">Same song. Same moment. Together. ❤️</p>
-        </main>
+        <!-- 3. BRANDING & ENTRY -->
+        <div class="widget-brand entry-center-stack" id="entryCenterStack">
+          <div class="brandmark" id="brandLogo">
+            <svg class="brand-orbit" viewBox="0 0 100 40" width="120">
+              <path
+                d="M20 30 A20 20 0 1 1 80 30"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <circle cx="20" cy="30" r="1.5" fill="currentColor" />
+              <circle cx="80" cy="30" r="1.5" fill="currentColor" />
+            </svg>
+            <div class="brand-name">Nitinsinghverse</div>
+          </div>
 
-        <div id="entryControls" class="entry-controls">
-          <button id="joinBtn" class="join-btn" aria-label="Tap to join the live radio">
-            TAP TO JOIN
-          </button>
+          <main class="hero">
+            <h1 class="title">
+              <span class="sr-only">Mood Wala — Listen Together</span>
+              <span class="title-mood" aria-hidden="true">MOOD</span>
+              <span class="title-wala" aria-hidden="true">वाला</span>
+            </h1>
+            <p class="tagline">Same song. Same moment. Together. ❤️</p>
+          </main>
+
+          <div id="entryControls" class="entry-controls">
+            <button class="glass" id="joinBtn">
+              <div class="bars" id="bars"></div>
+              <div class="glow"></div>
+              <div class="gloss"></div>
+              <div class="streak"></div>
+              <span class="label">Tap to join us</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <!-- 4. LIVE STATUS -->
-      <div class="widget-status">
-        <div class="pill status-pill">
-          <div class="status-pill-grid">
-            <div class="status-col">
-              <div class="status-icon">👥</div>
-              <div class="status-val" id="userCount">–</div>
-              <div class="status-label">GLOBAL LISTENERS</div>
-              <div class="status-sub">Listening worldwide</div>
-            </div>
-            <div class="status-col">
-              <div class="status-icon">👥</div>
-              <div class="status-val" id="roomUserCount">–</div>
-              <div class="status-label">IN THIS ROOM</div>
-              <div class="status-sub">With you right now</div>
-            </div>
-            <div class="status-col admin-col">
-              <div class="status-icon">🎧</div>
-              <div class="status-val">ADMIN</div>
-              <div class="status-label admin-live-badge" id="adminLiveBadge" hidden>LIVE</div>
-              <div class="status-sub">Admin is Live</div>
+        <!-- 4. LIVE STATUS -->
+        <div class="widget-status">
+          <div class="pill status-pill">
+            <div class="status-pill-grid">
+              <div class="status-col">
+                <div class="status-icon">👥</div>
+                <div class="status-val" id="userCount">–</div>
+                <div class="status-label">GLOBAL LISTENERS</div>
+                <div class="status-sub">Listening worldwide</div>
+              </div>
+              <div class="status-col">
+                <div class="status-icon">👥</div>
+                <div class="status-val" id="roomUserCount">–</div>
+                <div class="status-label">IN THIS ROOM</div>
+                <div class="status-sub">With you right now</div>
+              </div>
+              <div class="status-col admin-col">
+                <div class="status-icon">🎧</div>
+                <div class="status-val">ADMIN</div>
+                <div
+                  class="status-label admin-live-badge"
+                  id="adminLiveBadge"
+                  hidden
+                >
+                  LIVE
+                </div>
+                <div class="status-sub">Admin is Live</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 5. ROOM CONTROLS -->
-      <div class="widget-room">
-        <div class="pill room-pill">
-          <div class="room-pill-header">
-            <span class="pill-icon">🏠</span>
-            <div class="room-pill-title">ROOM CONTROLS</div>
-          </div>
-          
-          <div id="roomNotJoined" class="room-not-joined">
-            <p class="room-invite-text">Invite your people. Same song, same moment.</p>
-            <div class="room-actions-cards">
-              <button id="createRoomBtn" aria-label="Create a room" class="room-card create-card">
-                <span class="card-icon">👥</span>
-                <span class="card-title">Create Room</span>
-                <span class="card-sub">Make a room & invite friends</span>
-              </button>
-              <div class="room-card join-card">
-                <span class="card-icon">🔗</span>
-                <span class="card-title">Join Room</span>
-                <span class="card-sub">Enter a code & join instantly</span>
-                <div class="join-inputs">
-                  <input type="text" id="joinRoomInput" aria-label="Enter room code" placeholder="# Code" maxlength="6" class="room-input" />
-                  <button id="joinRoomBtn" aria-label="Join room" class="join-btn-small">Join</button>
+        <!-- 5. ROOM CONTROLS -->
+        <div class="widget-room">
+          <div class="pill room-pill">
+            <div class="room-pill-header">
+              <span class="pill-icon">🏠</span>
+              <div class="room-pill-title">ROOM CONTROLS</div>
+            </div>
+
+            <div id="roomNotJoined" class="room-not-joined">
+              <p class="room-invite-text">
+                Invite your people. Same song, same moment.
+              </p>
+              <div class="room-actions-cards">
+                <button
+                  id="createRoomBtn"
+                  aria-label="Create a room"
+                  class="room-card create-card"
+                >
+                  <span class="card-icon">👥</span>
+                  <span class="card-title">Create Room</span>
+                  <span class="card-sub">Make a room & invite friends</span>
+                </button>
+                <div class="room-card join-card">
+                  <span class="card-icon">🔗</span>
+                  <span class="card-title">Join Room</span>
+                  <span class="card-sub">Enter a code & join instantly</span>
+                  <div class="join-inputs">
+                    <input
+                      type="text"
+                      id="joinRoomInput"
+                      aria-label="Enter room code"
+                      placeholder="# Code"
+                      maxlength="6"
+                      class="room-input"
+                    />
+                    <button
+                      id="joinRoomBtn"
+                      aria-label="Join room"
+                      class="join-btn-small"
+                    >
+                      Join
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div id="roomJoined" class="room-joined" hidden>
-            <div class="room-joined-card">
-              <div class="room-joined-header">🎧 LISTENING ROOM</div>
-              <div class="room-joined-info">
-                <span class="room-label">ROOM CODE:</span>
-                <span id="currentRoomCodeLabel" class="room-code-badge">MAIN</span>
-              </div>
-              <div class="room-joined-actions">
-                <button id="copyRoomBtn" aria-label="Copy Room Code" class="room-btn copy-btn">Copy Code</button>
-                <button id="leaveRoomBtn" aria-label="Leave room" class="room-btn leave-btn">Leave Room</button>
+
+            <div id="roomJoined" class="room-joined" hidden>
+              <div class="room-joined-card">
+                <div class="room-joined-header">🎧 LISTENING ROOM</div>
+                <div class="room-joined-info">
+                  <span class="room-label">ROOM CODE:</span>
+                  <span id="currentRoomCodeLabel" class="room-code-badge"
+                    >MAIN</span
+                  >
+                </div>
+                <div class="room-joined-actions">
+                  <button
+                    id="copyRoomBtn"
+                    aria-label="Copy Room Code"
+                    class="room-btn copy-btn"
+                  >
+                    Copy Code
+                  </button>
+                  <button
+                    id="leaveRoomBtn"
+                    aria-label="Leave room"
+                    class="room-btn leave-btn"
+                  >
+                    Leave Room
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div id="roomErrorMsg" class="room-error" hidden></div>
-        </div>
-      </div>
-
-      <!-- 6. ADMIN CONTROLS (Including Playlists) -->
-      <div class="widget-admin admin-panel" id="adminPanel" hidden>
-        <div class="admin-header">🎛 Admin Controls</div>
-
-        <div class="admin-section">
-          <div class="admin-label">🎵 PLAYLISTS</div>
-          <div id="playlistButtons" class="playlist-buttons"></div>
-        </div>
-
-        <div class="admin-section">
-          <div class="admin-label">PLAY A LINK</div>
-          <div class="link-row">
-            <input type="text" id="linkInput" placeholder="Paste YouTube / YT Music link here..." />
-            <button id="linkPlayBtn">Play</button>
+            <div id="roomErrorMsg" class="room-error" hidden></div>
           </div>
         </div>
 
-        <div class="admin-section">
-          <div class="admin-label">REQUESTS <span id="requestCount"></span></div>
-          <div id="requestList" class="request-list"></div>
+        <!-- 6. ADMIN CONTROLS (Including Playlists) -->
+        <div class="widget-admin admin-panel" id="adminPanel" hidden>
+          <div class="admin-header">🎛 Admin Controls</div>
+
+          <div class="admin-section">
+            <div class="admin-label">🎵 PLAYLISTS</div>
+            <div id="playlistButtons" class="playlist-buttons"></div>
+          </div>
+
+          <div class="admin-section">
+            <div class="admin-label">PLAY A LINK</div>
+            <div class="link-row">
+              <input
+                type="text"
+                id="linkInput"
+                placeholder="Paste YouTube / YT Music link here..."
+              />
+              <button id="linkPlayBtn">Play</button>
+            </div>
+          </div>
+
+          <div class="admin-section">
+            <div class="admin-label">
+              REQUESTS <span id="requestCount"></span>
+            </div>
+            <div id="requestList" class="request-list"></div>
+          </div>
+        </div>
+
+        <!-- 7. SONG REQUEST (Visible to everyone) -->
+        <div class="widget-request request-box" id="requestBox" hidden>
+          <div class="request-inner">
+            <span class="req-icon">🎵</span>
+            <input
+              type="text"
+              id="requestInput"
+              aria-label="Request a song"
+              placeholder="Request a song…"
+              maxlength="200"
+            />
+            <button id="requestSendBtn" aria-label="Send song request">
+              Send
+            </button>
+          </div>
+        </div>
+
+        <!-- SEARCH (Admin only) -->
+        <div id="searchWidget" class="search-widget widget-search" hidden>
+          <div class="search-widget-header">
+            🔍 <span>Search a song</span>
+            <span id="searchCountLabel" class="search-count"></span>
+          </div>
+          <div class="search-widget-input-row">
+            <input
+              type="text"
+              id="searchInput"
+              aria-label="Search for a song"
+              placeholder="Start typing…"
+            />
+          </div>
+          <div id="searchResults" class="search-results"></div>
+        </div>
+
+        <!-- SONG LIST PANEL (Admin only) -->
+        <div id="songListPanel" class="song-list-panel widget-songlist" hidden>
+          <div class="panel-title">Tap a song to play it</div>
+          <div id="songListItems"></div>
+        </div>
+      </div>
+      <!-- End Layout Grid -->
+
+      <div id="player" class="hidden-player"></div>
+
+      <!-- Admin login popup -->
+      <div id="adminModal" class="modal-overlay" hidden>
+        <div class="modal-box">
+          <div class="modal-title">Welcome Admin</div>
+          <input
+            type="password"
+            id="adminPasswordInput"
+            aria-label="Admin password"
+            placeholder="Enter password"
+          />
+          <div class="modal-buttons">
+            <button id="adminSubmitBtn">Enter</button>
+            <button id="adminCancelBtn" class="modal-cancel">Cancel</button>
+          </div>
+          <div id="adminError" class="modal-error" hidden>Wrong password</div>
         </div>
       </div>
 
-      <!-- 7. SONG REQUEST (Visible to everyone) -->
-      <div class="widget-request request-box" id="requestBox" hidden>
-        <div class="request-inner">
-          <span class="req-icon">🎵</span>
-          <input type="text" id="requestInput" aria-label="Request a song" placeholder="Request a song…" maxlength="200" />
-          <button id="requestSendBtn" aria-label="Send song request">Send</button>
-        </div>
+      <!-- Admin transport controls -->
+      <div id="adminTransport" class="admin-transport" hidden>
+        <button id="prevBtn" aria-label="Previous song">⏮</button>
+        <button id="nextBtn" aria-label="Next song">⏭</button>
       </div>
 
-      <!-- SEARCH (Admin only) -->
-      <div id="searchWidget" class="search-widget widget-search" hidden>
-        <div class="search-widget-header">
-          🔍 <span>Search a song</span>
-          <span id="searchCountLabel" class="search-count"></span>
+      <!-- "Coming up next" banner shown to everyone during the 10s buffer -->
+      <div id="upNextBanner" class="up-next-banner" hidden></div>
+
+      <footer class="dock" id="dock" hidden>
+        <div class="progress-track" id="progressTrack">
+          <div class="progress-fill" id="progressFill"></div>
         </div>
-        <div class="search-widget-input-row">
-          <input type="text" id="searchInput" aria-label="Search for a song" placeholder="Start typing…" />
+        <div class="dock-row">
+          <div class="dock-left">
+            <img id="albumArt" class="album-art" src="" alt="Album Artwork" />
+            <div class="dock-info">
+              <div class="dock-label">NOW PLAYING</div>
+              <div class="dock-title" id="songTitle">—</div>
+              <div class="dock-artist" id="songArtist">—</div>
+              <div class="up-next-line" id="upNextLine"></div>
+            </div>
+          </div>
+
+          <div class="dock-right">
+            <span class="progress-time" id="progressTime">0:00 / 0:00</span>
+            <div class="volume-control">
+              <span class="vol-icon" aria-hidden="true">🔊</span>
+              <input
+                type="range"
+                id="volumeSlider"
+                aria-label="Volume control"
+                min="0"
+                max="100"
+                value="80"
+              />
+            </div>
+            <div class="live-tag"><span class="pulse"></span> LIVE</div>
+          </div>
         </div>
-        <div id="searchResults" class="search-results"></div>
-      </div>
-
-      <!-- SONG LIST PANEL (Admin only) -->
-      <div id="songListPanel" class="song-list-panel widget-songlist" hidden>
-        <div class="panel-title">Tap a song to play it</div>
-        <div id="songListItems"></div>
-      </div>
-
-    </div> <!-- End Layout Grid -->
-
-    <div id="player" class="hidden-player"></div>
-
-    <!-- Admin login popup -->
-    <div id="adminModal" class="modal-overlay" hidden>
-      <div class="modal-box">
-        <div class="modal-title">Welcome Admin</div>
-        <input type="password" id="adminPasswordInput" aria-label="Admin password" placeholder="Enter password" />
-        <div class="modal-buttons">
-          <button id="adminSubmitBtn">Enter</button>
-          <button id="adminCancelBtn" class="modal-cancel">Cancel</button>
-        </div>
-        <div id="adminError" class="modal-error" hidden>Wrong password</div>
-      </div>
+      </footer>
     </div>
 
-    <!-- Admin transport controls -->
-    <div id="adminTransport" class="admin-transport" hidden>
-      <button id="prevBtn" aria-label="Previous song">⏮</button>
-      <button id="nextBtn" aria-label="Next song">⏭</button>
-    </div>
+    <!-- Visible SEO Section (Hidden when Radio is active) -->
+    <footer class="seo-footer" id="seoSection">
+      <h2>Mood Wala — Listen Together</h2>
+      <p>
+        <strong>Mood Wala is a live synchronized music experience</strong> where
+        friends, couples, and groups can listen to the same song together
+        through shared listening rooms.
+      </p>
 
-    <!-- "Coming up next" banner shown to everyone during the 10s buffer -->
-    <div id="upNextBanner" class="up-next-banner" hidden></div>
-
-    <footer class="dock" id="dock" hidden>
-      <div class="progress-track" id="progressTrack">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <div class="dock-row">
-        <div class="dock-left">
-          <img id="albumArt" class="album-art" src="" alt="Album Artwork">
-          <div class="dock-info">
-            <div class="dock-label">NOW PLAYING</div>
-            <div class="dock-title" id="songTitle">—</div>
-            <div class="dock-artist" id="songArtist">—</div>
-            <div class="up-next-line" id="upNextLine"></div>
-          </div>
+      <div class="seo-grid">
+        <div class="seo-card">
+          <h3>Listen Together</h3>
+          <p>
+            Listen with your partner or friends in synchronized rooms, no matter
+            where you are.
+          </p>
         </div>
-
-        <div class="dock-right">
-          <span class="progress-time" id="progressTime">0:00 / 0:00</span>
-          <div class="volume-control">
-            <span class="vol-icon" aria-hidden="true">🔊</span>
-            <input type="range" id="volumeSlider" aria-label="Volume control" min="0" max="100" value="80" />
-          </div>
-          <div class="live-tag"><span class="pulse"></span> LIVE</div>
+        <div class="seo-card">
+          <h3>Create a Listening Room</h3>
+          <p>
+            Create a room, invite your friends, and hear the same song at the
+            same time.
+          </p>
+        </div>
+        <div class="seo-card">
+          <h3>Live Synchronized Radio</h3>
+          <p>
+            Everyone in the room stays synchronized to the global broadcast
+            effortlessly.
+          </p>
+        </div>
+        <div class="seo-card">
+          <h3>Choose Your Mood</h3>
+          <p>
+            Whether you're looking for upbeat Bhojpuri songs, energetic Haryanvi
+            songs, or peaceful Bhakti songs, tune in and let the music take
+            over.
+          </p>
         </div>
       </div>
     </footer>
-  </div>
 
-  <!-- Visible SEO Section (Hidden when Radio is active) -->
-  <footer class="seo-footer" id="seoSection">
-    <h2>Mood Wala — Listen Together</h2>
-    <p><strong>Mood Wala is a live synchronized music experience</strong> where friends, couples, and groups can listen to the same song together through shared listening rooms.</p>
-    
-    <div class="seo-grid">
-      <div class="seo-card">
-        <h3>Listen Together</h3>
-        <p>Listen with your partner or friends in synchronized rooms, no matter where you are.</p>
-      </div>
-      <div class="seo-card">
-        <h3>Create a Listening Room</h3>
-        <p>Create a room, invite your friends, and hear the same song at the same time.</p>
-      </div>
-      <div class="seo-card">
-        <h3>Live Synchronized Radio</h3>
-        <p>Everyone in the room stays synchronized to the global broadcast effortlessly.</p>
-      </div>
-      <div class="seo-card">
-        <h3>Choose Your Mood</h3>
-        <p>Whether you're looking for upbeat Bhojpuri songs, energetic Haryanvi songs, or peaceful Bhakti songs, tune in and let the music take over.</p>
-      </div>
-    </div>
-  </footer>
+    <script src="https://tempo-wala.onrender.com/socket.io/socket.io.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="app.js"></script>
 
-  <script src="https://tempo-wala.onrender.com/socket.io/socket.io.js"></script>
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="app.js"></script>
-</body>
+    <script>
+      (function () {
+        const AUTO_RESET = false;
+        const GRAVITY = 1700,
+          BARS = 30;
+        const btn = document.getElementById("joinBtn"),
+          barsEl = document.getElementById("bars");
+        if (!btn || !barsEl) return;
+        const layer = document.createElement("div");
+        layer.id = "glass-shards";
+        document.body.appendChild(layer);
+        const rnd = (a, b) => a + Math.random() * (b - a);
+        const live = new Set();
+        let running = false,
+          last = 0,
+          pageEnd = 0,
+          broken = false;
+
+        const bars = [];
+        for (let i = 0; i < BARS; i++) {
+          const b = document.createElement("div");
+          b.className = "bar";
+          b.dataset.c = `hsl(${185 + i * 5} 95% 62%)`;
+          b.style.background = `linear-gradient(180deg,#fff,${b.dataset.c})`;
+          b.style.boxShadow = `0 0 10px ${b.dataset.c}`;
+          barsEl.appendChild(b);
+          bars.push(b);
+        }
+        function idle(t) {
+          if (broken) return;
+          if (true) {
+            t /= 1000;
+            const beat = Math.pow(Math.max(0, Math.sin(t * Math.PI * 4)), 3);
+            bars.forEach((b, i) => {
+              const v =
+                0.2 +
+                0.8 *
+                  Math.abs(
+                    Math.sin(t * 3 + i * 0.55) * 0.55 +
+                      Math.sin(t * 5.3 + i * 0.9) * 0.35,
+                  ) *
+                  (0.65 + 0.35 * beat);
+              b.style.transform = `scaleY(${Math.min(1, v).toFixed(3)})`;
+            });
+          }
+          requestAnimationFrame(idle);
+        }
+        requestAnimationFrame(idle);
+
+        function sound() {
+          try {
+            const A = new (window.AudioContext || window.webkitAudioContext)(),
+              n = A.sampleRate * 0.6;
+            const buf = A.createBuffer(1, n, A.sampleRate),
+              d = buf.getChannelData(0);
+            for (let i = 0; i < n; i++)
+              d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
+            const s = A.createBufferSource();
+            s.buffer = buf;
+            const f = A.createBiquadFilter();
+            f.type = "highpass";
+            f.frequency.value = 2500;
+            const g = A.createGain();
+            g.gain.value = 0.5;
+            s.connect(f).connect(g).connect(A.destination);
+            s.start();
+            for (let k = 0; k < 3; k++) {
+              const o = A.createOscillator(),
+                og = A.createGain(),
+                t = A.currentTime + rnd(0.02, 0.4);
+              o.frequency.value = rnd(2500, 7000);
+              og.gain.setValueAtTime(0.08, t);
+              og.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+              o.connect(og).connect(A.destination);
+              o.start(t);
+              o.stop(t + 0.16);
+            }
+          } catch (e) {}
+        }
+
+        function shatter(e) {
+          if (broken) return;
+          broken = true;
+          sound();
+          if (navigator.vibrate) navigator.vibrate(40);
+          const r = btn.getBoundingClientRect(),
+            W = r.width,
+            H = r.height;
+          let tx = e.clientX - r.left,
+            ty = e.clientY - r.top;
+          if (!e.detail && !e.clientX) {
+            tx = W / 2;
+            ty = H / 2;
+          }
+          tx = Math.max(0, Math.min(W, tx));
+          ty = Math.max(0, Math.min(H, ty));
+          const pageH = document.documentElement.scrollHeight;
+          pageEnd = pageH;
+          layer.style.height = pageH + "px";
+          const ox = r.left + scrollX,
+            oy = r.top + scrollY;
+
+          bars.forEach((b) => {
+            const br = b.getBoundingClientRect(),
+              el = document.createElement("div");
+            el.className = "fbar";
+            el.style.cssText = `left:${br.left + scrollX}px;top:${br.top + scrollY}px;width:${br.width}px;height:${br.height}px;background:${b.style.background};box-shadow:${b.style.boxShadow}`;
+            layer.appendChild(el);
+            const dx = br.left - r.left + br.width / 2 - tx;
+            live.add({
+              el,
+              x: 0,
+              y: 0,
+              rot: 0,
+              vx: dx * rnd(0.8, 2.2) + rnd(-120, 120),
+              vy: -rnd(500, 1100),
+              vr: rnd(-300, 300),
+              delay: 0.01,
+              baseY: br.top + scrollY,
+              pulse: true,
+              ph: rnd(0, 6),
+            });
+          });
+          barsEl.style.visibility = "hidden";
+
+          const maxR =
+            Math.max(
+              Math.hypot(tx, ty),
+              Math.hypot(W - tx, ty),
+              Math.hypot(tx, H - ty),
+              Math.hypot(W - tx, H - ty),
+            ) + 20;
+          const rings = 1 + Math.floor(Math.random() * 2),
+            spokes = 4 + Math.floor(Math.random() * 4),
+            radii = [0];
+          for (let j = 1; j < rings; j++)
+            radii.push(radii[j - 1] + (maxR / rings) * rnd(0.6, 1.4));
+          radii.push(Math.max(maxR, radii[radii.length - 1] + 10));
+          const off = rnd(0, Math.PI * 2);
+          const grid = radii.map((rad, j) => {
+            const row = [];
+            for (let i = 0; i <= spokes; i++) {
+              const a =
+                off +
+                (((i % spokes) + (j ? rnd(-0.35, 0.35) : 0)) * 2 * Math.PI) /
+                  spokes;
+              const rr =
+                j === 0 || j === radii.length - 1 ? rad : rad * rnd(0.82, 1.18);
+              row.push([tx + rr * Math.cos(a), ty + rr * Math.sin(a)]);
+            }
+            return row;
+          });
+          grid.forEach((row) => (row[spokes] = row[0]));
+
+          const clone = btn.cloneNode(true);
+          clone.querySelector(".bars").remove();
+          const html = clone.innerHTML;
+          for (let j = 0; j < radii.length - 1; j++)
+            for (let i = 0; i < spokes; i++) {
+              const pts = [
+                grid[j][i],
+                grid[j][i + 1],
+                grid[j + 1][i + 1],
+                grid[j + 1][i],
+              ];
+              const xs = pts.map((p) => p[0]),
+                ys = pts.map((p) => p[1]);
+              if (
+                Math.max(...xs) < 0 ||
+                Math.min(...xs) > W ||
+                Math.max(...ys) < 0 ||
+                Math.min(...ys) > H
+              )
+                continue;
+              const cx = Math.max(
+                  0,
+                  Math.min(W, xs.reduce((a, b) => a + b) / 4),
+                ),
+                cy = Math.max(0, Math.min(H, ys.reduce((a, b) => a + b) / 4));
+              const el = document.createElement("div");
+              el.className = "glass shard";
+              el.innerHTML = html;
+              el.style.cssText = `left:${ox}px;top:${oy}px;width:${W}px;height:${H}px;transform-origin:${cx}px ${cy}px;clip-path:polygon(${pts.map((p) => p[0].toFixed(1) + "px " + p[1].toFixed(1) + "px").join(",")})`;
+              const d = Math.hypot(cx - tx, cy - ty) || 1,
+                sp = rnd(40, 260) * (1 + 60 / (d + 30));
+              live.add({
+                el,
+                x: 0,
+                y: 0,
+                rot: 0,
+                vx: ((cx - tx) / d) * sp + rnd(-40, 40),
+                vy: ((cy - ty) / d) * sp * 0.5 - rnd(40, 200),
+                vr: rnd(-420, 420),
+                delay: (d / maxR) * 0.12 + rnd(0, 0.05),
+                baseY: oy + cy,
+              });
+              layer.appendChild(el);
+            }
+          btn.style.visibility = "hidden";
+          if (!running) {
+            running = true;
+            last = performance.now();
+            requestAnimationFrame(tick);
+          }
+        }
+
+        function tick(now) {
+          const dt = Math.min(0.033, (now - last) / 1000);
+          last = now;
+          live.forEach((s) => {
+            if (s.delay > 0) {
+              s.delay -= dt;
+              return;
+            }
+            s.vy += GRAVITY * dt;
+            s.x += s.vx * dt;
+            s.y += s.vy * dt;
+            s.rot += s.vr * dt;
+            const sc = s.pulse
+              ? ` scaleY(${(0.55 + 0.45 * Math.abs(Math.sin((now / 1000) * 14 + s.ph))).toFixed(2)})`
+              : "";
+            s.el.style.transform = `translate(${s.x}px,${s.y}px) rotate(${s.rot}deg)${sc}`;
+            if (s.baseY + s.y > pageEnd + 100) {
+              s.el.remove();
+              live.delete(s);
+            }
+          });
+          if (live.size) requestAnimationFrame(tick);
+          else {
+            running = false;
+            layer.remove();
+            btn.remove();
+            bars.length = 0;
+            if (AUTO_RESET)
+              setTimeout(() => {
+                broken = false;
+                barsEl.style.visibility = "visible";
+                btn.style.visibility = "visible";
+                btn.classList.remove("pop");
+                void btn.offsetWidth;
+                btn.classList.add("pop");
+              }, 700);
+          }
+        }
+        btn.addEventListener("click", shatter);
+      })();
+    </script>
+    \n
+  </body>
 </html>
