@@ -527,16 +527,37 @@ function renderRequests(requests) {
     : "";
 }
 
+function deleteRequest(id) {
+  socket.emit("adminDeleteRequest", id);
+  var el = document.getElementById("req-" + id);
+  if (el) el.remove();
+}
+window.deleteRequest = deleteRequest;
+
 function addRequestToList(entry) {
   var list = document.getElementById("requestList");
   var item = document.createElement("div");
   item.className = "request-item";
+  item.id = "req-" + entry.id;
+  item.style.display = "flex";
+  item.style.justifyContent = "space-between";
+  item.style.alignItems = "center";
+  item.style.padding = "6px 0";
+  item.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
+
   item.innerHTML =
-    "🎶 " +
+    '<div style="flex-grow:1; word-break:break-word; margin-right:10px;">🎶 ' +
     escapeHtml(entry.text) +
-    '<span class="req-time">' +
+    "</div>" +
+    '<div style="display:flex; align-items:center; gap:10px; min-width:max-content;">' +
+    '<span class="req-time" style="opacity:0.6; font-size:11px;">' +
     entry.time +
-    "</span>";
+    "</span>" +
+    '<button onclick="deleteRequest(' +
+    entry.id +
+    ')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size:14px; padding:4px;" title="Delete Message">✖</button>' +
+    "</div>";
+
   list.insertBefore(item, list.firstChild);
 }
 
