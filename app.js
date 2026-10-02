@@ -196,7 +196,7 @@ socket.on("resync", function (data) {
 
     // Only attempt to correct drift every 5 seconds
     var now = Date.now();
-    if (now - lastSyncCorrection < 5000) return;
+    if (now - lastSyncCorrection < 3000) return;
 
     var myTime = player.getCurrentTime();
     var drift = Math.abs(myTime - adjustedElapsed);
