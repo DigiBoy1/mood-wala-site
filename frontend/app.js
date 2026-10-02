@@ -2,7 +2,7 @@
 const BACKEND_URL = "https://tempo-wala.onrender.com";
 
 const BACKGROUND_VIDEOS = [
-  "background.mp4", "bg3.mp4", "bg4.mp4", "bg5.mp4", "bg7.mp4", "bg9.mp4"
+  "background.webm", "bg3.webm", "bg4.webm", "bg5.webm", "bg7.webm", "bg9.webm"
 ];
 var availableBackgrounds = [...BACKGROUND_VIDEOS];
 var currentPlayingVideoId = null;
