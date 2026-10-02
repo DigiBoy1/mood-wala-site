@@ -286,6 +286,17 @@ window.onYouTubeIframeAPIReady = function () {
         var slider = document.getElementById("volumeSlider");
         if (slider) player.setVolume(parseInt(slider.value, 10));
       },
+      onError: function (event) {
+        console.error("YouTube Player Error:", event.data);
+        if ([2, 5, 100, 101, 150].includes(event.data)) {
+          if (currentVideo && currentVideo.id) {
+            socket.emit("reportPlaybackError", {
+              videoId: currentVideo.id,
+              errorCode: event.data,
+            });
+          }
+        }
+      },
     },
   });
 };
