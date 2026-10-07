@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap');
 :root {
   --purple: #a05cff;
   --purple-dark: #7b3fe4;
@@ -248,39 +249,31 @@ body {
 
 /* 6. ADMIN PANEL & PLAYLISTS */
 .widget-admin { z-index: 10; }
-.admin-panel {
-  background: var(--glass); backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border); border-radius: 20px; padding: 0;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4); overflow: hidden;
-}
-.admin-header {
-  font-weight: 800; font-size: 15px; padding: 16px 20px; color: var(--text);
-  background: linear-gradient(135deg, rgba(160,92,255,0.35), rgba(201,138,62,0.2));
-  border-bottom: 1px solid var(--glass-border);
-}
-.admin-section { padding: 16px 20px; border-bottom: 1px solid var(--glass-border); }
-.admin-section:last-child { border-bottom: none; }
-.admin-label { font-size: 11px; letter-spacing: 0.6px; color: var(--purple); margin-bottom: 12px; font-weight: 700; text-transform: uppercase; }
-.playlist-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
-.playlist-buttons button {
-  padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(160,92,255,0.4);
-  background: rgba(160,92,255,0.1); color: var(--text); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-}
-.playlist-buttons button.active, .playlist-buttons button:hover {
-  background: var(--purple); border-color: var(--purple); color: white;
-}
+.admin-panel { position: relative; overflow: hidden; contain: paint; border-radius: 26px !important; background: linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.07)) !important; backdrop-filter: blur(14px) saturate(150%) !important; -webkit-backdrop-filter: blur(14px) saturate(150%) !important; border: 1px solid rgba(255,255,255,0.22) !important; box-shadow: 0 24px 60px -12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(255,255,255,0.1), inset 8px 0 16px -10px rgba(255,255,255,0.35) !important; padding: 0; margin-bottom: 20px; }
+.admin-panel::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 90px; background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent); pointer-events: none; }
+.admin-panel::after { content: ""; position: absolute; top: -30%; left: -60%; width: 40%; height: 160%; transform: rotate(20deg); pointer-events: none; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent); animation: adminSweep 1.4s ease-out 0.4s 1 both; }
+@keyframes adminSweep { from { transform: rotate(20deg) translateX(0); } to { transform: rotate(20deg) translateX(400%); } }
+.admin-header { position: relative; display: flex; align-items: center; gap: 12px; padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.12) !important; background: linear-gradient(90deg, rgba(168,85,247,0.28), rgba(168,85,247,0.04)) !important; font-family: "Outfit", sans-serif; font-weight: 700; font-size: 18px !important; letter-spacing: 0.3px; color: #fff !important; }
+.admin-section { position: relative; padding: 18px 22px !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; }
+.admin-section:last-child { border-bottom: 0 !important; }
+.admin-label { margin: 0 0 12px !important; font-size: 11px !important; font-weight: 600 !important; letter-spacing: 1.8px !important; text-transform: uppercase !important; color: #d8b4fe !important; display: flex; align-items: center; gap: 6px; }
+.playlist-buttons { display: flex; flex-wrap: wrap; gap: 9px !important; }
+.playlist-buttons button { font: 600 13px "Inter", sans-serif !important; color: #f4f1ff !important; padding: 11px 16px !important; border-radius: 999px !important; cursor: pointer; background: rgba(255,255,255,0.07) !important; border: 1px solid rgba(255,255,255,0.2) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.25) !important; transition: transform 0.15s, background 0.2s, box-shadow 0.2s !important; }
+@media (hover: hover) { .playlist-buttons button:hover { transform: translateY(-2px); background: rgba(168,85,247,0.2) !important; } }
+.playlist-buttons button.active { border-color: rgba(255,255,255,0.5) !important; background: linear-gradient(135deg, #c084fc, #8b5cf6) !important; box-shadow: 0 6px 18px rgba(139,92,246,0.55), inset 0 1px 0 rgba(255,255,255,0.6) !important; color: #fff !important; }
 .link-row { display: flex; gap: 8px; }
-.link-row input {
-  flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--glass-border);
-  background: rgba(0,0,0,0.3); color: var(--text); font-size: 14px; outline: none;
-}
-.link-row button {
-  padding: 10px 20px; border-radius: 10px; border: none; background: var(--purple);
-  color: white; font-weight: 700; cursor: pointer;
-}
-.request-list { display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; }
-.request-item { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 10px 14px; font-size: 13px; }
-.request-item .req-time { font-size: 11px; opacity: 0.5; display: block; margin-top: 4px; }
+.admin-input { flex: 1; min-width: 0; font: 400 16px "Inter", sans-serif !important; color: #f4f1ff !important; padding: 13px 14px !important; border-radius: 14px !important; outline: 0 !important; background: rgba(0,0,0,0.22) !important; border: 1px solid rgba(255,255,255,0.16) !important; box-shadow: inset 0 2px 6px rgba(0,0,0,0.25) !important; transition: border-color 0.2s, box-shadow 0.2s !important; }
+.admin-input::placeholder { color: rgba(244,241,255,0.62) !important; }
+.admin-input:focus { border-color: #c084fc !important; box-shadow: 0 0 0 3px rgba(192,132,252,0.28) !important; }
+.admin-btn.play-btn { font: 700 14px "Outfit", sans-serif !important; letter-spacing: 0.4px !important; color: #fff !important; padding: 0 22px !important; min-height: 48px !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 14px !important; cursor: pointer; background: linear-gradient(180deg, #c084fc, #7c3aed) !important; box-shadow: 0 8px 20px rgba(124,58,237,0.5), inset 0 1px 0 rgba(255,255,255,0.6) !important; transition: transform 0.15s, filter 0.2s !important; width: auto !important; margin: 0 !important; }
+@media (hover: hover) { .admin-btn.play-btn:hover { filter: brightness(1.1); transform: translateY(-1px); } }
+.admin-btn.play-btn:active { transform: scale(0.96); }
+.request-list { display: flex; flex-direction: column; gap: 10px !important; max-height: 250px; overflow-y: auto; }
+.request-item { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 10px !important; padding: 12px 14px !important; border-radius: 14px !important; cursor: pointer; background: rgba(255,255,255,0.07) !important; border: 1px solid rgba(255,255,255,0.14) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.2) !important; transition: background 0.2s, transform 0.25s, opacity 0.25s !important; }
+@media (hover: hover) { .request-item:hover { background: rgba(255,255,255,0.12) !important; } }
+.request-item button { border: 0 !important; background: none !important; color: #fb7185 !important; font-size: 18px !important; line-height: 1 !important; cursor: pointer !important; min-width: 36px !important; min-height: 36px !important; border-radius: 10px !important; padding: 0 !important; }
+@media (hover: hover) { .request-item button:hover { background: rgba(251,113,133,0.18) !important; } }
+
 
 /* 7. SONG REQUEST BOX (Public) */
 .widget-request { width: 100%; z-index: 10; }
